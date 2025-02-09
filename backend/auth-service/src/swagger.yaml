@@ -1,0 +1,89 @@
+openapi: 3.0.0
+info:
+  title: Auth Service API
+  description: API d'authentification avec JWT
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000/api
+    description: Serveur local
+
+paths:
+  /auth/register:
+    post:
+      summary: Inscription utilisateur
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "testuser"
+                email:
+                  type: string
+                  example: "test@mail.com"
+                password:
+                  type: string
+                  example: "password123"
+      responses:
+        "201":
+          description: Utilisateur créé avec succès
+        "400":
+          description: Erreur - Email déjà utilisé
+
+  /auth/login:
+    post:
+      summary: Connexion utilisateur
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "test@mail.com"
+                password:
+                  type: string
+                  example: "password123"
+      responses:
+        "200":
+          description: Connexion réussie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        "401":
+          description: Identifiants invalides
+
+  /auth/profile:
+    get:
+      summary: Récupérer les informations de l'utilisateur
+      security:
+        - bearerAuth: []
+      tags:
+        - User
+      responses:
+        "200":
+          description: Informations utilisateur
+        "401":
+          description: Token invalide ou expiré
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
