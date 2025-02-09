@@ -129,7 +129,7 @@ Déploiement via **Docker + Vercel + CI/CD GitHub Actions** (à configurer selon
 ---
 
 ## 📌 Contributeurs
-👤 **Nom du Dev** – *Fullstack Developer*
+👤 **Nom du Dev** – *Mohamed ESSID*
 
 ---
 
